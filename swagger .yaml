@@ -1,0 +1,378 @@
+swagger: "2.0"
+info:
+  description: "This is the API doumentation for Soham's Admin Service API that basically lets new lenders register thmeselves into the system and lets users to monitor the lenders."
+  version: "1.0.0"
+  title: "Admin Service"
+  termsOfService: "https://idexcel-interns.atlassian.net/wiki/spaces/JAVA/pages/50036739/Admin+Service+API+Requirements"
+  contact:
+    email: "soham.gupt@idexcel.net"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "localhost:8080"
+basePath: "/soham-api"
+tags:
+- name: "lenders"
+  description: "Everything about the Lenders"
+  externalDocs:
+    description: "Find out more"
+    url: "https://idexcel-interns.atlassian.net/wiki/spaces/JAVA/pages/50036739/Admin+Service+API+Requirements"
+- name: "healthCheck"
+  description: "Tells us whether the service is running smoothly or not"
+
+schemes:
+- "https"
+- "http"
+paths:
+  /lenders:
+    post:
+      tags:
+      - "lenders"
+      summary: "Add a new lender to the system"
+      description: ""
+      operationId: "addLender"
+      consumes:
+      - "application/json"
+      
+      
+      
+    
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Lender object that needs to be added to the system"
+        required: true
+        schema:
+          $ref: "#/definitions/Lender"
+      responses:
+        201:
+          description: "Lender created successfully"
+        409:
+          description: "Conflict. Failed to create lender"
+          
+          
+      
+    
+    get:
+      tags:
+      - "lenders"
+      summary: "Get a list of all lenders"
+      
+      operationId: "getallLenders"
+      produces:
+      
+      - "application/json"
+      
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/LenderInfo"
+              
+      
+        
+  /lenders/{lenderId}:
+    get:
+      tags:
+      - "lenders"
+      summary: "View a lender by ID"
+      
+      operationId: "viewaLender"
+      produces:
+      
+      - "application/json"
+      
+      parameters:
+      - name: "lenderId"
+        in: "path"
+        description: "The lender that needs to be fetched "
+        required: true
+        type: "integer"
+        format: "int64"
+      
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/LenderDetails"
+        
+        404:
+          description: "unable to find lender"
+          
+          
+    put:
+      tags:
+      - "lenders"
+      summary: "Updated lender"
+      
+      operationId: "updateLender"
+      consumes:
+      
+      - "application/json"
+      parameters:
+      - name: "lenderId"
+        in: "path"
+        description: "lender that need to be updated"
+        required: true
+        type: "integer"
+        format: "int64"
+      - in: "body"
+        name: "body"
+        description: "Updated lender object"
+        required: true
+        schema:
+          $ref: "#/definitions/LenderStatus"
+      responses:
+        204:
+          description: "no content"
+        404:
+          description: "Lender not found"
+    delete:
+      tags:
+      - "lenders"
+      summary: "Delete lender"
+      
+      operationId: "deleteLender"
+      
+      parameters:
+      - name: "lenderId"
+        in: "path"
+        description: "The lender that needs to be deleted"
+        required: true
+        type: "integer"
+        format: "int64"
+        
+      responses:
+        204:
+          description: "no content"
+        404:
+          description: "Lender not found"
+          
+    patch:
+      tags:
+      - "lenders"
+      summary: "Update lender status"
+      
+      operationId: "updateLenderStatus"
+      parameters:
+      - name: "lenderId"
+        in: "path"
+        description: "The lender that needs to be deleted"
+        required: true
+        type: "integer"
+        format: "int64"
+      - in: "body"
+        name: "body"
+        description: "Updated lender status"
+        required: true
+        schema:
+          
+          $ref: "#/definitions/LenderPatch"
+        
+          
+          
+      responses:
+        204:
+          description: "no content"
+        404:
+          description: "Lender not found"
+          
+    head:
+      tags:
+      - "lenders"
+      summary: " "
+      
+      operationId: ""
+      
+      parameters:
+      - name: "lenderId"
+        in: "path"
+        
+        required: true
+        type: "integer"
+        format: "int64"
+        
+      responses:
+        200:
+          description: "no problem"
+        404:
+          description: "Lender not found"   
+          
+          
+  /healthCheck:  
+    get:
+      tags:
+      - "healthCheck"
+      summary: "Check if the application is running"
+      
+      operationId: "HealthStatus"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Lender object that needs to be added to the system"
+        required: true
+        schema: 
+          $ref: "#/definitions/HealthMessage" 
+        
+      responses:
+        204:
+          description: "no content"
+        
+    
+      
+      
+    
+    
+        
+        
+      
+        
+      
+      
+          
+  
+securityDefinitions:
+  petstore_auth:
+    type: "oauth2"
+    authorizationUrl: "http://petstore.swagger.io/oauth/dialog"
+    flow: "implicit"
+    scopes:
+      write:pets: "modify pets in your account"
+      read:pets: "read your pets"
+  api_key:
+    type: "apiKey"
+    name: "api_key"
+    in: "header"
+definitions:
+  HealthMessage:
+    type: "object"
+    properties:
+      
+      message:
+        type: "string"
+    xml:
+      name: "HealthMessage"
+    
+  Address:
+    type: "object"
+    properties:
+      
+      street:
+        type: "string"
+      city:
+        type: "string"
+      state:
+        type: "string"
+      zipCode:
+        type: "string"
+      country:
+        type: "string"
+      
+    xml:
+      name: "Address"
+  primaryContact:
+    type: "object"
+    properties:
+      
+      name:
+        type: "string"
+      email:
+        type: "string"
+      phone:
+        type: "string"
+      
+      
+    xml:
+      name: "primaryContact"    
+  
+  LenderInfo:
+    type: "object"
+    properties:
+      id: 
+        type: "string"
+      name:
+        type: "string"
+      status:
+        type: "string"
+    xml:
+      name: "LenderInfo"
+    
+  Lender:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+      address:
+        $ref: "#/definitions/Address"
+      primaryContact:
+        $ref: "#/definitions/primaryContact"
+    xml:
+      name: "Lender"
+        
+  LenderPatch:
+    type: "object"
+    properties:
+      id: 
+        type: "string"
+      status:
+        type: "string"
+    xml:
+      name: "LenderPatch"
+        
+  LenderStatus:
+    type: "object"
+    properties:
+      id: 
+        type: "string"
+      name: 
+        type: "string"
+      
+        
+      
+      address:
+        $ref: "#/definitions/Address"
+      primaryContact:
+        $ref: "#/definitions/primaryContact"
+        
+      status: 
+        type: "string"
+    xml:
+      name: "LenderStatus"
+        
+  LenderDetails:
+    type: "object"
+    properties:
+      id: 
+        type: "string"
+      name: 
+        type: "string"
+      
+        
+      
+      address:
+        $ref: "#/definitions/Address"
+      primaryContact:
+        $ref: "#/definitions/primaryContact"
+        
+      status: 
+        type: "string"
+      createdBy: 
+        type: "string"
+      createdDate: 
+        type: "string"
+      updatedBy: 
+        type: "string"
+      updatedDate: 
+        type: "string"
+    xml:
+      name: "LenderDetails"
+      
+    
+      
+    
+  
+externalDocs:
+  description: "Find out more about Swagger"
+  url: "http://swagger.io"
