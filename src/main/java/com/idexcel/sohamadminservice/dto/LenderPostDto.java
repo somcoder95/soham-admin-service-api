@@ -10,6 +10,13 @@ public class LenderPostDto {
 		
 	}
 	
+	public LenderPostDto(String name, addressDto address, primaryContactDto primaryContact) {
+		
+		this.name = name;
+		this.address = address;
+		this.primaryContact = primaryContact;
+	}
+
 	public String getName() {
 		return name;
 	}

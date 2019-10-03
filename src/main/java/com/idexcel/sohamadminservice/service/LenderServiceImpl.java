@@ -17,10 +17,11 @@ public class LenderServiceImpl implements LenderService{
 	@Autowired
 	private LenderRepository lenderDAO; 
 	
-	public void saveLender(Lender lender)
+	public String saveLender(Lender lender)
 	{   Lender  existingLender = lenderDAO.findByName(lender.getName());
 	    if(existingLender!=null) throw new LenderAlreadyExistsException("Lender " + lender.getName() + " Already Exists!");
 		this.lenderDAO.save(lender);
+		return lender.getId();
 	}
 	public void updateLender(Lender lender)
 	{   Lender existing_lender=lenderDAO.findByid(lender.getId());

@@ -23,6 +23,19 @@ private Date updatedDate;
 public Lender()
 {   
 }
+public Lender(String id, String name, Address address, PrimaryContact primaryContact, String status, String createdBy,
+		Date createdDate, String updatedBy, Date updatedDate) {
+	
+	this.id = id;
+	this.name = name;
+	this.address = address;
+	this.primaryContact = primaryContact;
+	this.status = status;
+	this.createdBy = createdBy;
+	this.createdDate = createdDate;
+	this.updatedBy = updatedBy;
+	this.updatedDate = updatedDate;
+}
 
 public String getId() {
 	return id;
@@ -35,6 +48,8 @@ public void setId(String id) {
 public String getName() {
 	return name;
 }
+
+
 
 public void setName(String name) {
 	this.name = name;
