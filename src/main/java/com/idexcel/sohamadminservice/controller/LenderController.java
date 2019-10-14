@@ -142,7 +142,7 @@ public class LenderController {
 	
 	@GetMapping("/healthCheck")
 	public String healthStatus() {
-		return "soham admin service is running.";
+		return "soham admin service is up and running.";
 	}
 	
 	
